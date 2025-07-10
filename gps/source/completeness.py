@@ -40,4 +40,6 @@ def P_completeness(df, rs, bcut=0.7, cumdist=(17.56, 1, 0.49)):
         rs = df[rs].values
     return P_transit(rs, df['a'].values, bcut) * P_detection(df['rp'].values, df['p'].values, cumdist)
 
-# print(P_completeness(1.5, 10, 0.02, 1))
+def get_nkic():
+    kicdf = pd.read_csv(os.path.join(os.path.dirname(os.path.dirname(__file__)), 'data', 'fulton+2017', 'kic_filtered.csv'))
+    return kicdf['id_kic'].count()
