@@ -3,3 +3,4 @@
 *.pyc
 .idea/*
 tests/*
+example_notebooks/photevap_test*.py
