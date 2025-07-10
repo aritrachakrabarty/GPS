@@ -19,7 +19,7 @@ def xdot_photevap(t, X, Mp, Rp, a, ms, eta=0.1):
     return -eta*np.pi*Rp**3*Lxuv(t, ms)/(4*np.pi*a**2*G*Mp**2)
 
 
-def atm_structure_photevap(mc, X, Teq, a, ms=1, rc=None, rp=None, eta=0.1, tstart=10, tend=1000, tnum=200, t=None, rp_calc_meth=0, Xmin=0.00001, snapshot=False, **kwargs):
+def atm_structure_photevap(mc, X, Teq, a, ms=1, rc=None, rp=None, eta=0.1, t=None, rp_calc_meth=0, Xmin=0.00001, snapshot=False, **kwargs):
     # tstart, tend, and t are in Myr
 
     if np.all(X < Xmin):
@@ -29,9 +29,7 @@ def atm_structure_photevap(mc, X, Teq, a, ms=1, rc=None, rp=None, eta=0.1, tstar
     mc, rc, Teq, X, a, ms, wf, eta = np.broadcast_arrays(mc, rc, Teq, X, a, ms, wf, eta)
 
     if t is None:
-        t = np.linspace(tstart, tend, tnum)
-    # if t[0] == 0:  # Ensure t is never zero, some functions may collapse at t=0
-    #     t[0] = t[1]/2
+        t = np.linspace(10, 5000, 100)  # t[0] is not zero as some functions may collapse at t=0
     dt = np.diff(t)
 
     if rp is not None:
@@ -47,7 +45,7 @@ def atm_structure_photevap(mc, X, Teq, a, ms=1, rc=None, rp=None, eta=0.1, tstar
 
     progress = kwargs.pop('progress', False)
     for i in range(0, len(t) - 1):
-        if progress and (i % 10 == 0 or i == len(t) - 2):
+        if progress and (i==0 or i % 10 == 9 or i == len(t) - 2):
             print(f'time-step: {i+1}/{len(t)-1}', end='\r')
         Xf[mask] = Xf[mask] + xdot_photevap(t[i], Xf[mask], mc[mask]*ME, rpf[mask]*RE, a[mask]*AU, ms[mask], eta[mask]) * dt[i]
         mask = Xf > Xmin

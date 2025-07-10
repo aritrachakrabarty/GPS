@@ -72,7 +72,7 @@ def total_rad_generic(meth, mp=None, X=None, Teq=None, rc=None, wf=None, **kwarg
         return rad_lopezfortney_analytic(mp, rc, X, Teq, kwargs.pop('age', 100))
     elif callable(meth):
         args = kwargs.pop('args', ())
-        age = kwargs.pop('age', 0)
+        locals().update(**kwargs)
         args = list(args)
         for i in range(len(args)):
             args[i] = locals()[args[i]]
