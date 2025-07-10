@@ -5,3 +5,4 @@
 tests/*
 example_notebooks/photevap_test*.py
 example_notebooks/.ipynb_checkpoints/
+password
