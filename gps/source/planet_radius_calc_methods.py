@@ -68,10 +68,11 @@ def total_rad_generic(meth, mp=None, X=None, Teq=None, rc=None, wf=None, **kwarg
     if meth == 'Z19-grid':
         wf_cutoff = kwargs.pop('wf_cutoff', 0.3)
         return rad_from_zeng_grid(mp, Teq, X, filetype='core+env', rocky=wf < wf_cutoff)
-    elif meth == 'LP14':
-        return rad_lopezfortney_analytic(mp, rc, Teq, X, kwargs.pop('age', 100))
+    elif meth == 'LF14':
+        return rad_lopezfortney_analytic(mp, rc, X, Teq, kwargs.pop('age', 100))
     elif callable(meth):
         args = kwargs.pop('args', ())
+        age = kwargs.pop('age', 0)
         args = list(args)
         for i in range(len(args)):
             args[i] = locals()[args[i]]

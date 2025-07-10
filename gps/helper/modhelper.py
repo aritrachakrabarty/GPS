@@ -7,7 +7,7 @@ from matplotlib.ticker import ScalarFormatter
 path2data = lambda *args: os.path.join(os.path.dirname(os.path.dirname(__file__)), 'data', *args)
 
 
-def evolve_genesis_data(models, star=None, X=None, Xparametric=True, imp_mx_cutoff=None, tgasdisp=None, photevap_eta=None, rpcalc='LP14', rpmax=5, start_age=200, end_age=5000):
+def evolve_genesis_data(models, star=None, X=None, Xparametric=True, imp_mx_cutoff=None, tgasdisp=None, photevap_eta=None, rpcalc='LF14', rpmax=5, start_age=200, end_age=5000):
     sev = StrucEvol(path2data('genesis_all_wfs.pk'), star=star)
     if isinstance(models, (list, tuple)):
         sev.df = sev.df[sev.df['sys'].apply(lambda x: x[0] in models)].reset_index(drop=True)

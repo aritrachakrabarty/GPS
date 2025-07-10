@@ -59,7 +59,7 @@ class StrucEvol:
             else:
                 self.df['rc'] = meth()
 
-    def calc_total_radii(self, meth='LP14', **kwargs):
+    def calc_total_radii(self, meth='LF14', **kwargs):
         self.df['rpo'] = total_rad_generic(meth, self.df['m'], self.df['x'], self.df['T'], self.df['rc'], self.df['wf'], **kwargs)
         self.df['rp'] = self.df['rpo'] + 0
 
@@ -75,10 +75,10 @@ class StrucEvol:
         self.df['rp'][PHI < phi_cutoff] = self.df['rc'][PHI < phi_cutoff].values
         self.df['x'][PHI < phi_cutoff] = X_low
 
-    def calc_photevap_loss_by_timescale(self, eta=0.1, tmax=3000, tnum=500, rp_calc_method='LP14', **kwargs):
+    def calc_photevap_loss_by_timescale(self, eta=0.1, tmax=3000, tnum=500, rp_calc_method='LF14', **kwargs):
         if callable(eta):
             eta = calc_eta(eta, self.df['m'], self.df['rp'])
-        self.df['rp'], self.df['x'] = atm_structure_photevap(self.df['m'], self.df['rc'], self.df['rp'], self.df['x'], self.df['T'], self.df['a'], self.star['ms'], eta, tmax, tnum, rp_calc_meth=rp_calc_method, **kwargs)
+        self.df['rp'], self.df['x'] = atm_structure_photevap(self.df['m'], self.df['x'], self.df['T'], self.df['a'], self.star['ms'], self.df['rc'], self.df['rp'], eta, tmax, tnum, rp_calc_meth=rp_calc_method, **kwargs)
 
 
 
